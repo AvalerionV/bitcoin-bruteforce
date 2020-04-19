@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+  <meta charset="utf-8" />
+  <title>WebSocket Test</title>
+  <script language="javascript" type="text/javascript">
+
+var opcodes = {
+  OP_0: 0x00,
+  OP_PUSHDATA1: 0x4c,
+  OP_PUSHDATA2: 0x4d,
+  OP_PUSHDATA4: 0x4e,
+  // continue with the rest of opcodes, grab from https://github.com/bcoin-org/bcoin/blob/master/lib/script/common.js
+};
+var codeops = Object.keys(opcodes).reduce(function(o, k) { 
+  o[opcodes[k]] = k; return o;
+},{})
+
+function bytesToHexString(bytearray) { return bytearray.reduce(function(o, c) { return o += ('0' + (c & 0xFF).toString(16)).slice(-2)},'' ) }
+
+function hexStringToBytes(script) { 
+  return script.split('').reduce(function(o,c,i) {
+    if(i%2===0) o.push(c)
+    else o[o.length-1]+=c
+    return o
+  }, []).map(function(b) { return parseInt(b, 16)})
+}
+
+function asmToBytes(asm) {
+  return asm.split(' ').reduce(function(o,c,i) { 
+    if(typeof opcodes[c]!='undefined') { o.push(opcodes[c]); return o }
+    else {
+      var bytes = hexStringToBytes(c)
+      if(bytes.length == 1 && bytes[0] > 1 && bytes[0] <= 16) {o.push(bytes[0]+0x50); return o}
+      else if (bytes[0] < 0x02) { o.push(bytes[0]); return o}
+      return o.concat( [bytes.length] ).concat(bytes)
+    }
+    
+  },[])
+}
+
+function bytesToAsm(bytes) {
+  var commands = []
+  
+  for(var b=0;b<bytes.length;b++) {
+    var byte = bytes[b]
+    if(byte <0x02) {
+      commands.push(byte)
+      continue
+    }
+    if(byte >= 0x52 && byte <= 0x60)  {
+      commands.push(byte-0x50)
+      continue
+    }
+    if(byte >= 0x02 && byte <= 0x4b) {
+      commands.push(bytesToHexString(bytes.slice(b+1, b+1+byte)))
+      b+=byte
+      continue
+    }
+    if(codeops[byte]) commands.push(codeops[byte])
+    else throw('unknown opcode'+byte+' '+b)
+  }
+  return commands
+}
+
+  var wsUri = "wss://ws.blockchain.info/inv";
+  var output;
+	var count;
+	var c = 0;
+
+  function init()
+  {
+    output = document.getElementById("output");
+	count = document.getElementById("count");
+    testWebSocket();
+  }
+
+  function testWebSocket()
+  {
+    websocket = new WebSocket(wsUri);
+    websocket.onopen = function(evt) { onOpen(evt) };
+    // websocket.onclose = function(evt) { onClose(evt) };
+    websocket.onmessage = function(evt) { onMessage(evt) };
+    websocket.onerror = function(evt) { onError(evt) };
+  }
+
+  function onOpen(evt)
+  {
+    writeToScreen("CONNECTED");
+    doSend('{"op":"unconfirmed_sub"}');
+  }
+
+  function onClose(evt)
+  {
+    writeToScreen("DISCONNECTED");
+  }
+
+  function onMessage(evt)
+  {
+	var t0 = performance.now();
+	var jsonData = evt.data;
+	var obj = JSON.parse(jsonData);
+	
+	try {
+		var t_hash = obj.x.hash;
+		var input_1 = bytesToAsm(hexStringToBytes(obj.x.inputs[0].script))
+		var input_2 = bytesToAsm(hexStringToBytes(obj.x.inputs[1].script))
+		
+		if (input_1[0] == input_2[0]) {
+			console.log(input_1[0] + " => " + input_2[0]);
+		}
+
+		var r1 = input_1[0].substr(8, 64);
+		var r2 = input_2[0].substr(8, 64);
+		var s1 = input_1[0].slice(76, -2);
+		var s2 = input_2[0].slice(76, -2);
+		
+		if (r1.length==64 && r2.length==64 && s1.length==64 && s2.length==64) {
+			if (r1==r2) 
+			{
+				writeToScreen('<span style="color: green;font-size:900;">Found</span><p>r1: '+r1+'<br>r2: '+r2+'<br>s1: '+s1+'<br>s2: '+s2+'<br><br>hash: '+t_hash+'</p>');
+			} else 
+			{
+				//console.clear();
+				//console.log(r1 + ' Not Equal => ' + r2);
+			}
+		}
+
+	} catch {
+	}
+
+	var t1 = performance.now();
+
+	c = c+1;
+	updateCount('Transaction Processed: '+c+' | Speed: '+(t1-t0));
+
+	
+    	//writeToScreen('<span style="color: blue;">Input 1: ' + +'</span>');
+    	//writeToScreen('<span style="color: blue;">Input 2: ' + obj.x.inputs[1].script+'</span>');
+    	//websocket.close();
+  }
+
+  function onError(evt)
+  {
+    writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
+  }
+
+  function doSend(message)
+  {
+    writeToScreen("SENT: " + message);
+    websocket.send(message);
+  }
+
+  function writeToScreen(message)
+  {
+    var pre = document.createElement("p");
+    pre.style.wordWrap = "break-word";
+    pre.innerHTML = message;
+    output.appendChild(pre);
+  }
+
+	function updateCount(c) 
+	{
+		count.innerHTML = c;
+	}
+
+  window.addEventListener("load", init, false);
+
+  </script>
+
+  <h2>WebSocket Test</h2>
+
+  <div id="output"></div>
+
+	<div class="stats" style="position:fixed;bottom:10px;font-size:24px;right:10px;">
+		<div id="count"></div>
+	</div>
