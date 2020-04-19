@@ -114,7 +114,7 @@ function length(obj) {
 	
 	try {
 var t_hash = obj.x.hash;
-updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonLength+1) + '\n' + 'Complexity ((n+1)*n)/2: ' + ((jsonLength+1)*jsonLength)/2);
+updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonLength+1) + '\n' + 'Complexity (n*n)/2: ' + ((jsonLength+1)*jsonLength)/2);
 		for(var i = 0; i<(jsonLength-1); i++) {
 			for(var j = i+1; j<jsonLength; j++) {
 		var input_1 = bytesToAsm(hexStringToBytes(obj.x.inputs[i].script))
