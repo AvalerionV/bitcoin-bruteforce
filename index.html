@@ -1,6 +1,12 @@
 <!DOCTYPE html>
   <meta charset="utf-8" />
   <title>WebSocket Test</title>
+  <style>
+	body {
+		font-family:Roboto;
+	}
+  </style>
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   <script language="javascript" type="text/javascript">
 
 var opcodes = {
@@ -84,7 +90,6 @@ function bytesToAsm(bytes) {
 
   function onOpen(evt)
   {
-    writeToScreen("CONNECTED");
     doSend('{"op":"unconfirmed_sub"}');
   }
 
@@ -145,7 +150,6 @@ function bytesToAsm(bytes) {
 
   function doSend(message)
   {
-    writeToScreen("SENT: " + message);
     websocket.send(message);
   }
 
@@ -166,7 +170,9 @@ function bytesToAsm(bytes) {
 
   </script>
 
-  <h2>WebSocket Test</h2>
+  <h2 style="text-align:center;">Block Chain WebSocket Listener</h2>
+
+<div class="info" style="padding:20px;">If you are not sure what this is, I advice reading this <a href="https://hackernoon.com/hacking-a-bitcoin-wallet-642u36sa">article</a>. This script will only help you to find vulnerable transactions, if they still exist at all! You will still have to do the rest of the work manually.</div>
 
   <div id="output"></div>
 
