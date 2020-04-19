@@ -70,13 +70,15 @@ function bytesToAsm(bytes) {
   var wsUri = "wss://ws.blockchain.info/inv";
   var output;
 	var count;
+	var debug;
 	var c = 0;
 
   function init()
   {
-    output = document.getElementById("output");
+	output = document.getElementById("output");
 	count = document.getElementById("count");
-    testWebSocket();
+	debug = document.getElementById("debug");
+	testWebSocket();
   }
 
   function testWebSocket()
@@ -98,21 +100,26 @@ function bytesToAsm(bytes) {
     writeToScreen("DISCONNECTED");
   }
 
+function length(obj) {
+	return Object.keys(obj).length;
+}
+
   function onMessage(evt)
   {
 	var t0 = performance.now();
 	var jsonData = evt.data;
 	var obj = JSON.parse(jsonData);
 	
+	var jsonLength = length(obj.x.inputs);
+	
 	try {
-		var t_hash = obj.x.hash;
-		var input_1 = bytesToAsm(hexStringToBytes(obj.x.inputs[0].script))
-		var input_2 = bytesToAsm(hexStringToBytes(obj.x.inputs[1].script))
+var t_hash = obj.x.hash;
+updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: Index[' + jsonLength + ']');
+		for(var i = 0; i<=(jsonLength-1); i++) {
+			for(var j = i+1; j<=jsonLength; j++) {
+		var input_1 = bytesToAsm(hexStringToBytes(obj.x.inputs[i].script))
+		var input_2 = bytesToAsm(hexStringToBytes(obj.x.inputs[j].script))
 		
-		if (input_1[0] == input_2[0]) {
-			console.log(input_1[0] + " => " + input_2[0]);
-		}
-
 		var r1 = input_1[0].substr(8, 64);
 		var r2 = input_2[0].substr(8, 64);
 		var s1 = input_1[0].slice(76, -2);
@@ -127,20 +134,15 @@ function bytesToAsm(bytes) {
 				//console.clear();
 				//console.log(r1 + ' Not Equal => ' + r2);
 			}
+				}
+			} 
 		}
-
 	} catch {
 	}
 
-	var t1 = performance.now();
-
 	c = c+1;
 	updateCount('Bitcoin Transactions Processed: '+c);
-
 	
-    	//writeToScreen('<span style="color: blue;">Input 1: ' + +'</span>');
-    	//writeToScreen('<span style="color: blue;">Input 2: ' + obj.x.inputs[1].script+'</span>');
-    	//websocket.close();
   }
 
   function onError(evt)
@@ -166,6 +168,12 @@ function bytesToAsm(bytes) {
 		count.innerHTML = c;
 	}
 
+	function updateDebug(c) 
+	{
+		debug.innerHTML = c;
+	}
+
+
   window.addEventListener("load", init, false);
 
   </script>
@@ -174,7 +182,9 @@ function bytesToAsm(bytes) {
 
 <div id="info" style="padding:20px;">If you are not sure what this is, I advice reading this <a href="https://hackernoon.com/hacking-a-bitcoin-wallet-642u36sa">article</a>. This script will only help you to find vulnerable transactions, that is, if they still exist at all! You will still have to do the rest of the work manually.<br/><br/>And no, there is no absolute way to reverse a bitcoin transaction if you were scammed! So stop bothering me with that. You will have better chances of getting your funds back if you legally file a complaint against the scammer.<br/><br/>Thank you.</div>
 
-  <div id="output" style="padding:20px;border:1px solid #000;"><center><span style="color:red;font-size:20px;">Vulnerable transactions will be displayed here.</span></center></div>
+  <div id="output" style="margin:20px;padding:20px;border:1px solid #000;"><center><span style="color:red;font-size:20px;">Vulnerable transactions will be displayed here.</span></center></div>
+
+<div id="debug-container" style="padding:20px;"><b>Information about the last processed transaction:</b><br/><br/><textarea id="debug" style="width:100%;height:150px;"></textarea></div>
 
 <div id="donate" style="padding:20px;">
 	<span style="padding-right:10px;font-weight:900;">BTC:</span>1DK5WaLLT8LigJRAPA9yVzZD4Acm8bikrc
