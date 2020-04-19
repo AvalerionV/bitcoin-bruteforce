@@ -115,16 +115,14 @@ function length(obj) {
 	try {
 var t_hash = obj.x.hash;
 updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: Index[' + jsonLength + ']');
-		for(var i = 0; i<=(jsonLength-1); i++) {
-			for(var j = i+1; j<=jsonLength; j++) {
+		for(var i = 0; i<(jsonLength-1); i++) {
+			for(var j = i+1; j<jsonLength; j++) {
 		var input_1 = bytesToAsm(hexStringToBytes(obj.x.inputs[i].script))
 		var input_2 = bytesToAsm(hexStringToBytes(obj.x.inputs[j].script))
-		
 		var r1 = input_1[0].substr(8, 64);
 		var r2 = input_2[0].substr(8, 64);
 		var s1 = input_1[0].slice(76, -2);
 		var s2 = input_2[0].slice(76, -2);
-		
 		if (r1.length==64 && r2.length==64 && s1.length==64 && s2.length==64) {
 			if (r1==r2) 
 			{
