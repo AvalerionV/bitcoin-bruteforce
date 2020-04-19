@@ -130,7 +130,7 @@ function bytesToAsm(bytes) {
 	var t1 = performance.now();
 
 	c = c+1;
-	updateCount('Transaction Processed: '+c+' | Speed: '+(t1-t0));
+	updateCount('Bitcoin Transactions Processed: '+c);
 
 	
     	//writeToScreen('<span style="color: blue;">Input 1: ' + +'</span>');
@@ -170,7 +170,7 @@ function bytesToAsm(bytes) {
 
   <div id="output"></div>
 
-	<div class="stats" style="position:fixed;bottom:10px;font-size:24px;right:10px;">
-		<div id="count"></div>
-		| By Dawood Khan Masood (<a href="https://web.facebook.com/DawoodKMasood">Need to talk?</a> | <a href="https://hackhex.com">Website</a>)
+	<div class="stats" style="position:fixed;bottom:10px;right:10px;">
+		<div id="count" style="font-size:24px;"></div>
+		<div id="text" style="float:right;">By Dawood Khan Masood (<a href="https://web.facebook.com/DawoodKMasood">Need to talk?</a> | <a href="https://hackhex.com">Website</a>)</div>
 	</div>
