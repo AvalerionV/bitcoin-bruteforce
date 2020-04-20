@@ -106,7 +106,7 @@ function length(obj) {
 	return Object.keys(obj).length;
 }
 
-  function onMessage(evt)
+  async function onMessage(evt)
   {
 	var t0 = performance.now();
 	var jsonData = evt.data;
@@ -165,12 +165,12 @@ updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonL
     output.appendChild(pre);
   }
 
-	function updateCount(c) 
+	async function updateCount(c) 
 	{
 		count.innerHTML = c;
 	}
 
-	function updateDebug(c) 
+	async function updateDebug(c) 
 	{
 		debug.innerHTML = c;
 	}
