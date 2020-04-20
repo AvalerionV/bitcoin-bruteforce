@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<head>
   <meta charset="utf-8" />
   <title>WebSocket Test</title>
   <style>
@@ -179,7 +180,8 @@ updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonL
 window.addEventListener("load", init, false);
 
   </script>
-
+</head>
+<body>
   <h2 style="text-align:center;">Block Chain WebSocket Listener</h2>
 
 <div id="info" style="padding:20px;">If you are not sure what this is, I advice reading this <a href="https://hackernoon.com/hacking-a-bitcoin-wallet-642u36sa">article</a>. This script will only help you to find vulnerable transactions, that is, if they still exist at all! You will still have to do the rest of the work manually. And no, there is no absolute way to reverse a bitcoin transaction if you were scammed! So stop bothering me with that. You will have better chances of getting your funds back if you legally file a complaint against the scammer.<br/><br/>It took me an hour to code this. Do not expect this to work properly. This script could have errors! You are more than welcome to contribute or fix any bugs you encounter: <a href="https://github.com/AvalerionV/avalerionv.github.io">https://github.com/AvalerionV/avalerionv.github.io</a><br/><br/>Thank you.</div>
@@ -197,3 +199,4 @@ window.addEventListener("load", init, false);
 		<div id="count" style="font-size:24px;"></div>
 		<div id="text" style="float:right;">By Dawood Khan Masood (<a href="https://web.facebook.com/DawoodKMasood">Need to talk?</a> | <a href="https://hackhex.com">Website</a>)</div>
 	</div>
+</body>
