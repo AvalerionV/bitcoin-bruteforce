@@ -547,13 +547,8 @@ function check_password(encrypted, password) {
 		decrypt(encrypted, password, function (decrypted) {
 			try {
 				obj = JSON.parse(decrypted);
-
-				console.log("Decrypted!");
-				console.log(obj);
 				found = true;
 			} catch (e) {
-				// console.log(e);
-				console.log("Failed to decrypt");
 			};
 		}, function (e) {
 			//    console.log(e);
@@ -582,7 +577,6 @@ function check_password(encrypted, password) {
 			document.getElementById('plain-json').value = decrypted;
 		});
 	} catch (e) {
-		log.console("Failed to decrypt");
 	}
 	return found;
 }
