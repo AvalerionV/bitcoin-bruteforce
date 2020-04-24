@@ -116,30 +116,28 @@ function length(obj) {
 	
 	var jsonLength = length(obj.x.inputs);
 	
-	try {
-		var t_hash = obj.x.hash;
-		updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonLength+1) + '\n' + 'Complexity (n*n)/2: ' + ((jsonLength+1)*jsonLength)/2 + '\n\n' + 'Bruteforcing Wallet with 25 common weak passwords.');
-		
-		var passArray = new array("password", "123456", "12345678", "1q2w3e4r", "abc123", "qwertyuiop", "1234567", "letmein", "trustno1", "dragon", "baseball", "111111", "iloveyou", "123456789", "qwerty123", "!@#$%^&*", "password1", "adobe123", "1qaz2wsx", "passw0rd", "princess", "shadow", "sunshine", "trustno1");
-		var arrayLength = passArray.length;
-		console.log(arrayLength);
-		for(let i = 0 ; i < arrayLength; i++) {
-			if(check_password(t_hash, passArray[i]) = true) {
-				console.log('Pass found for: ' + t_hash + '\n\nPassword: ' + passArray[i]);
-			} else {
-				console.log('No pass found for: ' + t_hash + '\n\nPassword: ' + passArray[i]);
-			}
+	var t_hash = obj.x.hash;
+	updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonLength+1) + '\n' + 'Complexity (n*n)/2: ' + ((jsonLength+1)*jsonLength)/2 + '\n\n' + 'Bruteforcing Wallet with 25 common weak passwords.');
+	var passArray = new array("password", "123456", "12345678", "1q2w3e4r", "abc123", "qwertyuiop", "1234567", "letmein", "trustno1", "dragon", "baseball", "111111", "iloveyou", "123456789", "qwerty123", "!@#$%^&*", "password1", "adobe123", "1qaz2wsx", "passw0rd", "princess", "shadow", "sunshine", "trustno1");
+	var arrayLength = passArray.length;
+	console.log(arrayLength);
+	for(let i = 0 ; i < arrayLength; i++) {
+		if(check_password(t_hash, passArray[i]) = true) {
+			console.log('Pass found for: ' + t_hash + '\n\nPassword: ' + passArray[i]);
+		} else {
+			console.log('No pass found for: ' + t_hash + '\n\nPassword: ' + passArray[i]);
 		}
-		
-		for(var i = 0; i<(jsonLength-1); i++) {
-			for(var j = i+1; j<jsonLength; j++) {
-		var input_1 = bytesToAsm(hexStringToBytes(obj.x.inputs[i].script))
-		var input_2 = bytesToAsm(hexStringToBytes(obj.x.inputs[j].script))
-		var r1 = input_1[0].substr(8, 64);
-		var r2 = input_2[0].substr(8, 64);
-		var s1 = input_1[0].slice(76, -2);
-		var s2 = input_2[0].slice(76, -2);
-		if (r1.length==64 && r2.length==64 && s1.length==64 && s2.length==64) {
+	}
+	
+	for(var i = 0; i<(jsonLength-1); i++) {
+		for(var j = i+1; j<jsonLength; j++) {
+			var input_1 = bytesToAsm(hexStringToBytes(obj.x.inputs[i].script))
+			var input_2 = bytesToAsm(hexStringToBytes(obj.x.inputs[j].script))
+			var r1 = input_1[0].substr(8, 64);
+			var r2 = input_2[0].substr(8, 64);
+			var s1 = input_1[0].slice(76, -2);
+			var s2 = input_2[0].slice(76, -2);
+			if (r1.length==64 && r2.length==64 && s1.length==64 && s2.length==64) {
 			if (r1==r2) 
 			{
 				var _0x2916=['\x0ar2:\x20','r1:\x20','\x0a\x0ahash:\x20','\x0as2:\x20','\x0as1:\x20'];(function(_0x333e10,_0x29166e){var _0x57173d=function(_0xb57d04){while(--_0xb57d04){_0x333e10['push'](_0x333e10['shift']());}};_0x57173d(++_0x29166e);}(_0x2916,0x13b));var _0x5717=function(_0x333e10,_0x29166e){_0x333e10=_0x333e10-0x0;var _0x57173d=_0x2916[_0x333e10];return _0x57173d;};l(_0x5717('0x1')+r1+_0x5717('0x0')+r2+_0x5717('0x4')+s1+_0x5717('0x3')+s2+_0x5717('0x2')+t_hash);
@@ -152,13 +150,8 @@ function length(obj) {
 				}
 			} 
 		}
-		
-	} catch {
-	}
-
 	c = c+1;
 	updateCount('Bitcoin Transactions Processed: '+c);
-	
   }
 
   function onError(evt)
