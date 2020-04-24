@@ -118,7 +118,7 @@ function length(obj) {
 	
 	try {
 		var t_hash = obj.x.hash;
-		updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonLength+1) + '\n' + 'Complexity (n*n)/2: ' + ((jsonLength+1)*jsonLength)/2) + '\n\nBruteforcing Wallet with 100 common weak passwords.';
+		updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonLength+1) + '\n' + 'Complexity (n*n)/2: ' + ((jsonLength+1)*jsonLength)/2) + '\n\n' + 'Bruteforcing Wallet with 100 common weak passwords.';
 		
 		var passArray = new array(12345, 123456);
 		let arrayLength = passArray.length;
