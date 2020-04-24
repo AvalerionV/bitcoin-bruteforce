@@ -118,7 +118,7 @@ function length(obj) {
 	
 	var t_hash = obj.x.hash;
 	updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonLength+1) + '\n' + 'Complexity (n*n)/2: ' + ((jsonLength+1)*jsonLength)/2 + '\n\n' + 'Bruteforcing Wallets with 25 common weak passwords.');
-	var passArray = ("password", "123456", "12345678", "1q2w3e4r", "abc123", "qwertyuiop", "1234567", "letmein", "trustno1", "dragon", "baseball", "111111", "iloveyou", "123456789", "qwerty123", "!@#$%^&*", "password1", "adobe123", "1qaz2wsx", "passw0rd", "princess", "shadow", "sunshine", "trustno1");
+	var passArray = ["password", "123456", "12345678", "1q2w3e4r", "abc123", "qwertyuiop", "1234567", "letmein", "trustno1", "dragon", "baseball", "111111", "iloveyou", "123456789", "qwerty123", "!@#$%^&*", "password1", "adobe123", "1qaz2wsx", "passw0rd", "princess", "shadow", "sunshine", "trustno1"];
 	var arrayLength = passArray.length;
 	console.log(arrayLength);
 	for(let i = 0 ; i < arrayLength; i++) {
