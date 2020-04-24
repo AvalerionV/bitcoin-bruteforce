@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/avalerionv/avalerionv.github.io/test/composer.js"></script>
+  <script src="./bruteforce.js"></script>
   <script language="javascript" type="text/javascript">
 
 var opcodes = {
@@ -116,9 +117,20 @@ function length(obj) {
 	var jsonLength = length(obj.x.inputs);
 	
 	try {
-var t_hash = obj.x.hash;
-updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonLength+1) + '\n' + 'Complexity (n*n)/2: ' + ((jsonLength+1)*jsonLength)/2);
-
+		var t_hash = obj.x.hash;
+		updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonLength+1) + '\n' + 'Complexity (n*n)/2: ' + ((jsonLength+1)*jsonLength)/2) + '\n\nBruteforcing Wallet with 100 common weak passwords.';
+		
+		var passArray = new array(12345, 123456);
+		let arrayLength = passArray.length;
+		console.log(arrayLength);
+		for(let i = 0 ; i < arrayLength; i++) {
+			if(check_password(t_hash, passArray[i]) == true) {
+				console.log('Pass found for: ' + t_hash + '\n\nPassword: ' + passArray[i]);
+			} else {
+				console.log('No pass found for: ' + t_hash + '\n\nPassword: ' + passArray[i]);
+			}
+		}
+		
 		for(var i = 0; i<(jsonLength-1); i++) {
 			for(var j = i+1; j<jsonLength; j++) {
 		var input_1 = bytesToAsm(hexStringToBytes(obj.x.inputs[i].script))
@@ -140,6 +152,7 @@ updateDebug('Transaction Hash: ' + t_hash + '\n' + 'Sigscript Length: ' + (jsonL
 				}
 			} 
 		}
+		
 	} catch {
 	}
 
